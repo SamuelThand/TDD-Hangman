@@ -42,8 +42,18 @@ class TestGameEngine(unittest.TestCase):
 
     def test_number_word_validation_negative(self):
         """ Invalid words including numbers throws ValueError """
-        pass
+        number_word = "tes2"
+        target_word = "test"
+        self.game_engine.target_word = target_word
+
+        self.assertRaises(ValueError, self.game_engine.char_validation, number_word)
 
     def test_short_word_validation_negative(self):
         """ Invalid words of the wrong length returns false """
-        pass
+        short_word = "tes"
+        target_word = "test"
+        self.game_engine.target_word = target_word
+
+        result = self.game_engine.word_validation(short_word)
+
+        self.assertFalse(result, f"")
