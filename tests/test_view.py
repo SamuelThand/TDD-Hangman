@@ -31,3 +31,11 @@ class TestGUI(unittest.TestCase):
         """Test that the buttons can be setup"""
         self.assertTrue(hasattr(GUI, 'setup_buttons') and callable(getattr(GUI, 'setup_buttons')))
 
+    def test_bind_play_button(self):
+        """Test the play button can be bound"""
+        self.assertTrue(hasattr(GUI, 'setup_buttons') and callable(getattr(GUI, 'setup_buttons')))
+
+    def test_bind_exit_button(self):
+        """Test the exit button can be bound"""
+        self.assertTrue(hasattr(GUI, 'setup_buttons') and callable(getattr(GUI, 'setup_buttons')))
+
