@@ -1,8 +1,9 @@
 import views.GUI as GUI
-import tkinter as tk
 
 
 def hangman():
+    """Entry point for the hangman game"""
+
     gui = GUI.GUI()
     gui.start()
 
