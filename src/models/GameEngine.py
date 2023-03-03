@@ -16,7 +16,7 @@ class GameEngine:
 
     def word_validation(self, entered_input: str) -> bool:
         """
-
+        Validates that the input is alphabetical and the same length as the target word.
         :param entered_input: word to validate
         :return: True if word is valid, else False
         """
