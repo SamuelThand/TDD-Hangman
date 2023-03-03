@@ -38,7 +38,8 @@ class TestGameEngine(unittest.TestCase):
 
         result = self.game_engine.word_validation(guess_word)
 
-        self.assertTrue(result, f"")
+        self.assertTrue(result,
+                        f"{guess_word} should be valid because it is same length as {self.game_engine.target_word}.")
 
     def test_number_word_validation_negative(self):
         """ Invalid words including numbers throws ValueError """
@@ -56,4 +57,4 @@ class TestGameEngine(unittest.TestCase):
 
         result = self.game_engine.word_validation(short_word)
 
-        self.assertFalse(result, f"")
+        self.assertFalse(result, f"{short_word} should be invalid because it is shorter than {target_word}.")
