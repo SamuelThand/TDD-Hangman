@@ -18,3 +18,10 @@ class TestGUI(unittest.TestCase):
 
     def test_destroy(self):
         self.assertTrue(hasattr(GUI, 'destroy') and callable(getattr(GUI, 'destroy')))
+
+    def test_setup_frames(self):
+        self.assertTrue(hasattr(GUI, 'setup_frames') and callable(getattr(GUI, 'setup_frames')))
+
+    def test_setup_buttons(self):
+        self.assertTrue(hasattr(GUI, 'setup_buttons') and callable(getattr(GUI, 'setup_buttons')))
+
