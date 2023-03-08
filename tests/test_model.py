@@ -161,21 +161,39 @@ class TestGameEngine(unittest.TestCase):
 
     def test_store_guessed_char_guessed_contains_letter(self):
         """ Letter gets stored in guessed letters """
-        guess = "a"
-        self.game_engine.store_guessed_char(guess, [])
-        self.assertTrue(guess in self.game_engine.guessed_letters)
+        char = "t"
+        self.game_engine.store_guessed_char(char, [])
+        self.assertTrue(char in self.game_engine.guessed_characters,
+                        "store_guessed_char should insert the letter to guessed_characters.")
 
     def test_store_guessed_char_matched_contains_letter(self):
         """ Letter gets stored in word_progress """
-        guess = "t"
-        self.game_engine.target_word = "letter"
-        self.game_engine.store_guessed_char("t", [2, 3])
-        self.assertTrue(guess in self.game_engine.word_progress)
+        char = "t"
+        self.game_engine.word_progress = ["_", "_", "_", "_", "_", "_"]
+        self.game_engine.store_guessed_char(char, [2, 3])
+        self.assertTrue(char in self.game_engine.word_progress,
+                        "store_guessed_char should insert the letter to word_progress.")
 
     def test_store_guessed_char_matched_letter_count(self):
         """ Letter gets stored in word_progress the correct amount of times """
-        pass
+        char = "t"
+        self.game_engine.word_progress = ["_", "_", "_", "_", "_", "_"]
+        self.game_engine.store_guessed_char(char, [2, 3])
+        result = self.game_engine.word_progress.count(char)
+        self.assertEqual(2, result, "store_guessed_char should insert the letter two times.")
+
+    def test_store_guessed_char_matched_letter_count_none(self):
+        """ Letter is not stored in word_progress if empty list is provided """
+        char = "t"
+        self.game_engine.word_progress = ["_", "_", "_", "_", "_", "_"]
+        self.game_engine.store_guessed_char(char, [])
+        result = self.game_engine.word_progress.count(char)
+        self.assertEqual(0, result, "store_guessed_char should insert the letter two times.")
 
     def test_store_guessed_char_matched_letter_index(self):
         """ Letter gets stored in the correct position in word_progress """
-        pass
+        char = "t"
+        self.game_engine.word_progress = ["_", "_", "_", "_", "_", "_"]
+        self.game_engine.store_guessed_char(char, [2, 3])
+        result = self.game_engine.word_progress[2] == char and self.game_engine.word_progress[3] == char
+        self.assertTrue(result, "store_guessed_char should insert the letter to word_progress index 2 and 3.")
