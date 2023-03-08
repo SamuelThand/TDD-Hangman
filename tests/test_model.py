@@ -13,6 +13,46 @@ class TestGameEngine(unittest.TestCase):
         """ Creates an instance of GameEngine before each test. """
         self.game_engine = GameEngine()
 
+    def test_has_target_word(self):
+        """Tests that the target_word field exists."""
+        self.assertTrue(hasattr(self.game_engine, 'target_word'))
+
+    def test_has_word_progress(self):
+        """Tests that the word_progress field exists."""
+        self.assertTrue(hasattr(self.game_engine, 'word_progress'))
+
+    def test_has_guessed_characters(self):
+        """Tests that the guessed_characters field exists."""
+        self.assertTrue(hasattr(self.game_engine, 'guessed_characters'))
+
+    def test_has_max_guesses(self):
+        """Tests that the max_guesses field exists."""
+        self.assertTrue(hasattr(self.game_engine, 'max_guesses'))
+
+    def test_has_guesses(self):
+        """Tests that the guesses field exists."""
+        self.assertTrue(hasattr(self.game_engine, 'guesses'))
+
+    def test_start_game(self):
+        """Tests that the start_game method exists."""
+        self.assertTrue(hasattr(self.game_engine, 'start_game') and
+                        callable(getattr(self.game_engine, 'start_game')))
+
+    def test_game_over(self):
+        """Tests that the game_over method exists."""
+        self.assertTrue(hasattr(self.game_engine, 'game_over') and
+                        callable(getattr(self.game_engine, 'game_over')))
+
+    def test_victory(self):
+        """Tests that the victory method exists."""
+        self.assertTrue(hasattr(self.game_engine, 'victory') and
+                        callable(getattr(self.game_engine, 'victory')))
+
+    def test_game_over_works(self):
+        """Tests that the game over method returns true for 8 guesses."""
+        self.game_engine.guesses = 8
+        self.assertTrue(self.game_engine.game_over())
+
     def test_get_word_returns_word(self):
         """Tests that get_word returns a string"""
         game_engine = GameEngine()

@@ -6,9 +6,31 @@ class GameEngine:
     """
     The GameEngine class is responsible for the logic of the game.
     """
+    target_word: str
+    word_progress: list
+    guessed_characters: list
+    max_guesses: int = 8
+    guesses: int
 
     def __init__(self):
         self.target_word = ""
+        self.word_progress = []
+        self.guessed_characters = []
+        self.guesses = 0
+
+    def start_game(self):
+        """Start the game"""
+        self.target_word = self.get_word()
+        #TODO what more responsibility
+
+    def game_over(self) -> bool:
+        """Test if it is game over"""
+        return self.guesses == self.max_guesses
+
+    def victory(self):
+        """Test if the victory condition is true"""
+        # TODO define victory condition
+        pass
 
     def get_word(self) -> str:
         """Get a random word from other/words.json"""
