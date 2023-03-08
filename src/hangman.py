@@ -1,11 +1,12 @@
-import views.GUI as GUI
+from views.GUI import GUI
+from models.GameEngine import GameEngine
+from controllers.Controller import Controller
 
 
 def hangman():
     """Entry point for the hangman game"""
-
-    gui = GUI.GUI()
-    gui.start()
+    controller = Controller(GameEngine(), GUI())
+    controller.start_gui()
 
 
 if __name__ == '__main__':
