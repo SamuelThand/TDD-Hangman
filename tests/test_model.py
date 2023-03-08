@@ -118,3 +118,26 @@ class TestGameEngine(unittest.TestCase):
         self.game_engine.target_word = target_word
         result = self.game_engine.word_validation(short_word)
         self.assertFalse(result, f"{short_word} should be invalid because it is shorter than {target_word}.")
+
+    def test_store_guessed_char_guessed_contains_letter(self):
+        """ Letter gets stored in guessed letters """
+        guess = "a"
+        self.game_engine.store_guessed_char(guess, [])
+        self.assertTrue(guess in self.game_engine.guessed_letters)
+
+    def test_store_guessed_char_matched_contains_letter(self):
+        """ Letter gets stored in word_progress """
+        guess = "t"
+        self.game_engine.target_word = "letter"
+        self.game_engine.store_guessed_char("t", [2, 3])
+        self.assertTrue(guess in self.game_engine.word_progress)
+
+    def test_store_guessed_char_matched_letter_count(self):
+        """ Letter gets stored in word_progress the correct amount of times """
+        pass
+
+    def test_store_guessed_char_matched_letter_index(self):
+        """ Letter gets stored in the correct position in word_progress """
+        pass
+
+

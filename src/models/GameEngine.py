@@ -70,3 +70,6 @@ class GameEngine:
                 raise ValueError
             return True
         return False
+
+    def store_guessed_char(self, char: str, indexes: [int]) -> None:
+        pass
