@@ -27,3 +27,12 @@ class TestController(unittest.TestCase):
         """Test that the controller has a view"""
         self.assertTrue(hasattr(self.controller_instance, 'view'))
 
+    def test_has_play_method(self):
+        """Test that the controller has a play method"""
+        self.assertTrue(hasattr(self.controller_instance, 'play') and
+                        callable(getattr(self.controller_instance, 'play')))
+
+    def test_has_exit_method(self):
+        """Test that the controller has a exit method"""
+        self.assertTrue(hasattr(self.controller_instance, 'exit') and
+                        callable(getattr(self.controller_instance, 'exit')))
