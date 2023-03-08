@@ -94,4 +94,11 @@ class GameEngine:
         return False
 
     def store_guessed_char(self, char: str, indexes: [int]) -> None:
-        pass
+        """
+        Stores the given character in the lists for guessed characters and word progress.
+        :param char: char to store
+        :param indexes: list of indexes for letter word progress
+        """
+        self.guessed_characters.append(char)
+        for index in indexes:
+            self.word_progress.insert(index, char)
