@@ -19,6 +19,18 @@ class GameEngine:
         except IOError as e:
             print(f'Error opening file: {e}')
 
+    def find_char_index(self, char: str) -> list:
+        """
+        Find one or multiple indexes of a character in the target word
+        :param char: character to find
+        :return: list of indexes
+        """
+        matches = []
+        for index, letter in enumerate(self.target_word):
+            if letter == char:
+                matches.append(index)
+        return matches
+
     def char_in_target_word(self, char: str) -> bool:
         """
         Check if a character is in the target word.

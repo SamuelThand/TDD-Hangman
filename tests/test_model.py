@@ -27,6 +27,28 @@ class TestGameEngine(unittest.TestCase):
         game_engine_instance = GameEngine()
         self.assertIsInstance(game_engine_instance, GameEngine)
 
+    def test_find_char_index(self):
+        """Tests that find_char_index returns a list"""
+        self.assertIsInstance(self.game_engine.find_char_index("r"), list)
+
+    def test_find_char_index_returns_single_match(self):
+        """Tests that find_char_index returns a list with a single index"""
+        char = "r"
+        self.game_engine.target_word = "letter"
+        self.assertEqual(self.game_engine.find_char_index(char), [5])
+
+    def test_find_char_index_returns_multiple_matches(self):
+        """Tests that find_char_index returns a list with multiple indexes"""
+        char = "t"
+        self.game_engine.target_word = "letter"
+        self.assertEqual(self.game_engine.find_char_index(char), [2, 3])
+
+    def test_find_char_index_returns_empty_list(self):
+        """Tests that find_char_index returns an empty list"""
+        char = "z"
+        self.game_engine.target_word = "letter"
+        self.assertEqual(self.game_engine.find_char_index(char), [])
+
     def test_char_in_target_word(self):
         """Tests that char_in_target_word returns a boolean"""
         result = self.game_engine.char_in_target_word("a")
@@ -62,3 +84,37 @@ class TestGameEngine(unittest.TestCase):
         result = self.game_engine.word_matches_target_word("west")
         self.assertFalse(result or result is None,
                          "word_matches_target_word should return False if the word does not match the target word")
+
+    def test_char_validation_positive(self):
+        """ Valid single-character input should return true. """
+        value = "a"
+        result = self.game_engine.char_validation(value)
+        self.assertTrue(result, "a should be a valid input.")
+
+    def test_char_validation_negative(self):
+        """ Invalid single-character input should throw ValueError"""
+        value = "3"
+        self.assertRaises(ValueError, self.game_engine.char_validation, value)
+
+    def test_word_validation_positive(self):
+        """ Valid words with the same length as target_word returns true """
+        guess_word = "test"
+        self.game_engine.target_word = guess_word
+        result = self.game_engine.word_validation(guess_word)
+        self.assertTrue(result,
+                        f"{guess_word} should be valid because it is same length as {self.game_engine.target_word}.")
+
+    def test_number_word_validation_negative(self):
+        """ Invalid words including numbers throws ValueError """
+        number_word = "tes2"
+        target_word = "test"
+        self.game_engine.target_word = target_word
+        self.assertRaises(ValueError, self.game_engine.char_validation, number_word)
+
+    def test_short_word_validation_negative(self):
+        """ Invalid words of the wrong length returns false """
+        short_word = "tes"
+        target_word = "test"
+        self.game_engine.target_word = target_word
+        result = self.game_engine.word_validation(short_word)
+        self.assertFalse(result, f"{short_word} should be invalid because it is shorter than {target_word}.")
