@@ -158,3 +158,104 @@ class TestGameEngine(unittest.TestCase):
         self.game_engine.target_word = target_word
         result = self.game_engine.word_validation(short_word)
         self.assertFalse(result, f"{short_word} should be invalid because it is shorter than {target_word}.")
+
+    def test_store_guessed_char_guessed_contains_letter(self):
+        """ Letter gets stored in guessed letters """
+        char = "t"
+        self.game_engine.store_guessed_char(char, [])
+        self.assertTrue(char in self.game_engine.guessed_characters,
+                        "store_guessed_char should insert the letter to guessed_characters.")
+
+    def test_store_guessed_char_matched_contains_letter(self):
+        """ Letter gets stored in word_progress """
+        char = "t"
+        self.game_engine.word_progress = ["_", "_", "_", "_", "_", "_"]
+        self.game_engine.store_guessed_char(char, [2, 3])
+        self.assertTrue(char in self.game_engine.word_progress,
+                        "store_guessed_char should insert the letter to word_progress.")
+
+    def test_store_guessed_char_matched_letter_count(self):
+        """ Letter gets stored in word_progress the correct amount of times """
+        char = "t"
+        self.game_engine.word_progress = ["_", "_", "_", "_", "_", "_"]
+        self.game_engine.store_guessed_char(char, [2, 3])
+        result = self.game_engine.word_progress.count(char)
+        self.assertEqual(2, result, "store_guessed_char should insert the letter two times.")
+
+    def test_store_guessed_char_matched_letter_count_none(self):
+        """ Letter is not stored in word_progress if empty list is provided """
+        char = "t"
+        self.game_engine.word_progress = ["_", "_", "_", "_", "_", "_"]
+        self.game_engine.store_guessed_char(char, [])
+        result = self.game_engine.word_progress.count(char)
+        self.assertEqual(0, result, "store_guessed_char should insert the letter two times.")
+
+    def test_store_guessed_char_matched_letter_index(self):
+        """ Letter gets stored in the correct position in word_progress """
+        char = "t"
+        self.game_engine.word_progress = ["_", "_", "_", "_", "_", "_"]
+        self.game_engine.store_guessed_char(char, [2, 3])
+        result = self.game_engine.word_progress[2] == char and self.game_engine.word_progress[3] == char
+        self.assertTrue(result, "store_guessed_char should insert the letter to word_progress index 2 and 3.")
+
+    def test_make_guess_char_returns_word_progress_no_match(self):
+        """ Non-matching char returns non-modified version of word progress """
+        char = "m"
+        clean_progress = ["_", "_", "_", "_", "_", "_"]
+        target_word = "letter"
+        self.game_engine.target_word = target_word
+        self.game_engine.word_progress = clean_progress.copy()
+        result = self.game_engine.make_guess(char)
+        self.assertEqual(result, clean_progress,
+                         "make_guess should not return modified word progress on non-matching chars")
+
+    def test_make_guess_char_increments_guesses_counter_no_match(self):
+        """ The guesses counter should be incremented on no match guesses """
+        char = "m"
+        target_word = "letter"
+        self.game_engine.target_word = target_word
+        self.game_engine.guesses = 0
+        self.game_engine.make_guess(char)
+        self.assertEqual(1, self.game_engine.guesses, "make_guess should increment guesses counter if no match")
+
+    def test_make_guess_char_returns_updated_word_progress_match(self):
+        """ Matching char returns modified version of word progress """
+        char = "t"
+        clean_progress = ["_", "_", "_", "_", "_", "_"]
+        target_word = "letter"
+        self.game_engine.target_word = target_word
+        self.game_engine.word_progress = clean_progress.copy()
+        result = self.game_engine.make_guess(char)
+        self.assertNotEqual(result, clean_progress, "make_guess should return modified word progress on matching chars")
+
+    def test_make_guess_char_guesses_counter_match(self):
+        """ The guesses counter should be incremented on no match guesses """
+        char = "t"
+        target_word = "letter"
+        self.game_engine.target_word = target_word
+        self.game_engine.guesses = 0
+        self.game_engine.make_guess(char)
+        self.assertEqual(0, self.game_engine.guesses, "make_guess should not increment guesses counter if match")
+
+    def test_make_guess_word_set_guesses_counter_to_max_on_no_match(self):
+        """
+         Guesses counter should have the same value as the max guesses if non-matching word is guessed """
+        word = "test"
+        target_word = "word"
+        max_guesses = self.game_engine.max_guesses
+        self.game_engine.target_word = target_word
+        self.game_engine.guesses = 0
+        self.game_engine.make_guess(word)
+        self.assertEqual(max_guesses, self.game_engine.guesses,
+                         "make_guess should set guesses counter to max if given non-matching word")
+
+    def test_make_guess_word_fills_word_progress_on_match(self):
+        """
+         make_guess should return complete word progress on matching word """
+        target_word = "word"
+        clean_progress = ["_", "_", "_", "_"]
+        result_progress = ["w", "o", "r", "d"]
+        self.game_engine.word_progress = clean_progress.copy()
+        self.game_engine.target_word = target_word
+        result = self.game_engine.make_guess(target_word)
+        self.assertEqual(result_progress, result, "make_guess should return complete word progress on matching word")
