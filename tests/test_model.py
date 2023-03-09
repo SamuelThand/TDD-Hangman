@@ -159,6 +159,12 @@ class TestGameEngine(unittest.TestCase):
         result = self.game_engine.word_validation(short_word)
         self.assertFalse(result, f"{short_word} should be invalid because it is shorter than {target_word}.")
 
+    def test_generate_word_list(self):
+        """Generated word_progress is the same length as the target_word"""
+        self.game_engine.target_word = self.game_engine.get_word()
+        self.game_engine.generate_word_list()
+        self.assertTrue(len(self.game_engine.word_progress) == len(self.game_engine.target_word))
+
     def test_store_guessed_char_guessed_contains_letter(self):
         """ Letter gets stored in guessed letters """
         char = "t"
@@ -259,3 +265,4 @@ class TestGameEngine(unittest.TestCase):
         self.game_engine.target_word = target_word
         result = self.game_engine.make_guess(target_word)
         self.assertEqual(result_progress, result, "make_guess should return complete word progress on matching word")
+

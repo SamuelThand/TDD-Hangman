@@ -21,7 +21,10 @@ class GameEngine:
     def start_game(self):
         """Start the game"""
         self.target_word = self.get_word()
-        # TODO what more responsibility
+        self.generate_word_list()
+
+    def generate_word_list(self):
+        self.word_progress = ['_' for _ in self.target_word]
 
     def game_over(self) -> bool:
         """Test if it is game over"""
