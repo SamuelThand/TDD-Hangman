@@ -21,7 +21,7 @@ class GameEngine:
     def start_game(self):
         """Start the game"""
         self.target_word = self.get_word()
-        #TODO what more responsibility
+        # TODO what more responsibility
 
     def game_over(self) -> bool:
         """Test if it is game over"""
@@ -102,3 +102,27 @@ class GameEngine:
         self.guessed_characters.append(char)
         for index in indexes:
             self.word_progress.insert(index, char)
+
+    def make_guess(self, guess: str) -> [str]:
+        """
+        Make a char or word guess against the target word.
+        The game progression is updated according to the result including:
+        - guesses counter
+        - word progress
+        :param guess: word or char to guess
+        :return: current version of word progress list
+        """
+        index: [int]
+        if len(guess) == 1:
+            if self.char_in_target_word(guess):
+                index = self.find_char_index(guess)
+                self.store_guessed_char(guess, index)
+            else:
+                self.guesses += 1
+        else:
+            if self.word_matches_target_word(guess):
+                for index, char in enumerate(guess):
+                    self.word_progress[index] = char
+            else:
+                self.guesses = self.max_guesses
+        return self.word_progress
