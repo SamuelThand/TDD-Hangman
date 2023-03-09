@@ -19,7 +19,8 @@ class Controller:
 
     def play(self, event: Event):
         """Play the game"""
-        print('Play')
+        self.model.start_game()
+        self.view.draw_game_frame(self.model.word_progress, self.model.guesses)
 
     def exit(self, event: Event):
         """Exit the application"""
