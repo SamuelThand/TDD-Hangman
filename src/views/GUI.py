@@ -57,7 +57,7 @@ class GUI:
             self.image_label = None
             self.image_label = None
 
-        self.hanging_image = tk.PhotoImage(file=f'../src/other/{guesses}.png').zoom(4)
+        self.hanging_image = tk.PhotoImage(file=f'../src/other/{guesses}.png').zoom(3)
         self.image_label = tk.Label(self.game_frame, image=self.hanging_image)
         self.image_label.pack()
 
