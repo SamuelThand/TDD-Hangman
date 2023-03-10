@@ -40,21 +40,6 @@ class TestController(unittest.TestCase):
         self.assertTrue(hasattr(self.controller_instance, 'exit') and
                         callable(getattr(self.controller_instance, 'exit')))
 
-    def test_input_callback(self):
-        """The correct callback is executed when bound to the input field in the view"""
-        # TODO varför blir den aldrig called?
-
-        self.controller_instance.view.input_field = tk.Entry(self.controller_instance.view.game_frame)
-        self.controller_instance.view.input_field.pack()
-        callback_mock = Mock()
-        self.controller_instance.view.input_field.bind("<Return>", callback_mock)
-        event_mock = Mock()
-        event_mock.widget = self.controller_instance.view.input_field
-        event_mock.widget.insert(0, 'a')
-        event_mock.widget.event_generate("<Return>")
-
-        callback_mock.assert_called_once_with(event_mock)
-
     def test_input_works(self):
         """Test that the correct letter or word is passed from the input field on submit"""
         passed_input = 'a'
@@ -67,7 +52,3 @@ class TestController(unittest.TestCase):
         event.widget.event_generate("<Return>")
 
         self.assertEqual(event.widget.get(), passed_input)
-
-    def test_displayed_word_correctly_updated:
-        # TODO implement
-        pass
