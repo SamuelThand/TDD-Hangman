@@ -114,10 +114,13 @@ class GameEngine:
         - word progress
         :param guess: word or char to guess
         :return: current version of word progress list
+        :raises Exception: If a letter already in guessed characters is passed
         """
         index: [int]
         if len(guess) == 1:
-            if self.char_in_target_word(guess):
+            if guess in self.guessed_characters:
+                raise Exception("Letter already in guessed letters")
+            elif self.char_in_target_word(guess):
                 index = self.find_char_index(guess)
                 self.store_guessed_char(guess, index)
             else:

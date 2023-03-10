@@ -266,3 +266,9 @@ class TestGameEngine(unittest.TestCase):
         result = self.game_engine.make_guess(target_word)
         self.assertEqual(result_progress, result, "make_guess should return complete word progress on matching word")
 
+    def test_make_guess_char_already_guessed(self):
+        """ Already guessed characters should not be used again """
+        guess = "t"
+        guesses = [guess]
+        self.game_engine.guessed_characters = guesses
+        self.assertRaises(Exception, self.game_engine.make_guess, guess)
