@@ -81,9 +81,13 @@ class GameEngine:
         :raises ValueError: if non-alphabetical input is provided
         :return: True if the char is alphabetical
         """
+        if len(entered_input) < 1:
+            raise ValueError("Empty input is not accepted")
         if entered_input.isalpha():
+            if entered_input in self.guessed_characters:
+                raise Exception("Letter already in guessed letters")
             return True
-        raise ValueError
+        raise ValueError("Invalid guess, numbers and symbols are not accepted")
 
     def word_validation(self, entered_input: str) -> bool:
         """
@@ -94,9 +98,9 @@ class GameEngine:
         target_word_length = len(self.target_word)
         if len(entered_input) == target_word_length:
             if not entered_input.isalpha():
-                raise ValueError
+                raise ValueError("Invalid guess, numbers and symbols are not accepted")
             return True
-        return False
+        raise Exception("Guess is not the same length as target word")
 
     def store_guessed_char(self, char: str, indexes: [int]) -> None:
         """
@@ -118,16 +122,16 @@ class GameEngine:
         :return: current version of word progress list
         :raises Exception: If a letter already in guessed characters is passed
         """
-        index: [int]
-        if len(guess) == 1:
-            if guess in self.guessed_characters:
-                raise Exception("Letter already in guessed letters")
-            elif self.char_in_target_word(guess):
+        index: [int] = []
+        if len(guess) <= 1:
+            self.char_validation(guess)
+            if self.char_in_target_word(guess):
                 index = self.find_char_index(guess)
-                self.store_guessed_char(guess, index)
             else:
                 self.guesses += 1
+            self.store_guessed_char(guess, index)
         else:
+            self.word_validation(guess)
             if self.word_matches_target_word(guess):
                 for index, char in enumerate(guess):
                     self.word_progress[index] = char

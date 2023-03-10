@@ -42,9 +42,20 @@ class Controller:
 
     def submit_input(self, event: Event):
         """Submit input to the model"""
-        self.view.display_word(self.model.make_guess(event.widget.get()))
-        event.widget.delete(0, END)
-        self.view.display_hanging_image(self.model.guesses)
+        try:
+            self.view.display_word(self.model.make_guess(event.widget.get()))
+            event.widget.delete(0, END)
+            self.view.display_hanging_image(self.model.guesses)
+        except ValueError as e:
+            # TODO implement incorrect input type notification
+            message = str(e)
+            # print(message)
+            self.view.display_message(message)
+        except Exception as e:
+            # TODO show exception message in notification
+            message = str(e)
+            # print(message)
+            self.view.display_message(message)
 
         if self.model.victory():
             self.view.play_button.config(state='normal')
