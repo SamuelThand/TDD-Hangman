@@ -38,8 +38,17 @@ class Controller:
 
     def submit_input(self, event: Event):
         """Submit input to the model"""
-        self.view.display_word(self.model.make_guess(event.widget.get()))
-        self.view.display_hanging_image(self.model.guesses)
+        try:
+            self.view.display_word(self.model.make_guess(event.widget.get()))
+            self.view.display_hanging_image(self.model.guesses)
+        except ValueError as e:
+            # TODO implement incorrect input type notification
+            message = str(e)
+            print(message)
+        except Exception as e:
+            # TODO show exception message in notification
+            message = str(e)
+            print(message)
 
         if self.model.victory():
             # TODO implement victory notification and game reset
