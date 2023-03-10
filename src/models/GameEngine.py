@@ -104,7 +104,7 @@ class GameEngine:
         """
         self.guessed_characters.append(char)
         for index in indexes:
-            self.word_progress.insert(index, char)
+            self.word_progress[index] = char
 
     def make_guess(self, guess: str) -> [str]:
         """

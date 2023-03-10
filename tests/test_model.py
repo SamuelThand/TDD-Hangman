@@ -244,8 +244,10 @@ class TestGameEngine(unittest.TestCase):
     def test_make_guess_char_guesses_counter_match(self):
         """ The guesses counter should be incremented on no match guesses """
         char = "t"
+        clean_progress = ["_", "_", "_", "_", "_", "_"]
         target_word = "letter"
         self.game_engine.target_word = target_word
+        self.game_engine.word_progress = clean_progress.copy()
         self.game_engine.guesses = 0
         self.game_engine.make_guess(char)
         self.assertEqual(0, self.game_engine.guesses, "make_guess should not increment guesses counter if match")
