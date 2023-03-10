@@ -2,6 +2,8 @@ import os
 import sys
 import unittest
 import tkinter as tk
+from tkinter import messagebox
+from unittest.mock import patch
 
 from src.views.GUI import GUI
 
@@ -59,12 +61,29 @@ class TestGUI(unittest.TestCase):
         """Test there is a method to display the word"""
         self.assertTrue(hasattr(GUI, 'display_word') and callable(getattr(GUI, 'display_word')))
 
+    def test_display_message(self):
+        """Test there is a method to display a message"""
+        self.assertTrue(hasattr(GUI, 'display_message') and callable(getattr(GUI, 'display_message')))
+
+    def test_display_message_displayed(self):
+        """Test that the correct message is displayed"""
+        with patch.object(messagebox, 'showinfo') as mock_showinfo:
+            self.gui.display_message("Test Message")
+            mock_showinfo.assert_called_once_with('Popup', 'Test Message')
+
+    def test_word_label_instance(self):
+        """Test that the word_label is not instantiated unnecessarily"""
+        self.gui.display_word([])
+        label_1 = self.gui.word_label
+        self.gui.display_word([])
+        self.assertEqual(label_1, self.gui.word_label)
+
     def test_setup_input_field_instance(self):
         """Tests that the input field is the child of the game frame"""
         self.gui.setup_input_field()
         self.assertIsInstance(self.gui.game_frame.winfo_children()[0], tk.Entry)
 
-    def test_word_label_instance(self):
+    def test_word_label_instance_label(self):
         """Tests that the word_label is a label"""
         word = ['_', '_', '_', '_', '_']
         self.gui.display_word(word)
