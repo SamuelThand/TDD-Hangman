@@ -8,6 +8,7 @@ class GUI:
     game_frame: tk.Frame
     play_button: tk.Button
     exit_button: tk.Button
+    input_field: tk.Entry
     image_label: tk.Label or None
     hanging_image: tk.PhotoImage or None
     word_label: tk.Label or None
@@ -47,8 +48,8 @@ class GUI:
 
     def setup_input_field(self):
         """Displays the input field for guesses"""
-        input_field = tk.Entry(self.game_frame)
-        input_field.pack(side=tk.BOTTOM)
+        self.input_field = tk.Entry(self.game_frame)
+        self.input_field.pack(side=tk.BOTTOM)
 
     def display_hanging_image(self, guesses: int):
         """Displays the hanging image for the amount of guesses"""
@@ -78,6 +79,10 @@ class GUI:
     def bind_exit_button(self, callback: Callable):
         """Bind a function to left-clicks on the exit button"""
         self.exit_button.bind("<Button-1>", callback)
+
+    def bind_input_field(self, callback: Callable):
+        """Bind a function to submitting the input field"""
+        self.input_field.bind("<Return>", callback)
 
     def start(self):
         """Start the GUI thread"""

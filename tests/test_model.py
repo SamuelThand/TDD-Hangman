@@ -53,6 +53,13 @@ class TestGameEngine(unittest.TestCase):
         self.game_engine.guesses = 8
         self.assertTrue(self.game_engine.game_over())
 
+    def test_victory_works(self):
+        """Tests that the victory method returns true if the target_word and word_progress joined matches."""
+        self.game_engine.start_game()
+        self.game_engine.word_progress = list(self.game_engine.target_word)
+
+        self.assertTrue(self.game_engine.victory())
+
     def test_get_word_returns_word(self):
         """Tests that get_word returns a string"""
         game_engine = GameEngine()

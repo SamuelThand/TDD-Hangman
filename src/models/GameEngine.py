@@ -24,6 +24,7 @@ class GameEngine:
         self.generate_word_list()
 
     def generate_word_list(self):
+        """Generate the word to be displayed to the player"""
         self.word_progress = ['_' for _ in self.target_word]
 
     def game_over(self) -> bool:
@@ -32,8 +33,7 @@ class GameEngine:
 
     def victory(self):
         """Test if the victory condition is true"""
-        # TODO define victory condition
-        pass
+        return self.target_word == ''.join(self.word_progress)
 
     def get_word(self) -> str:
         """Get a random word from other/words.json"""

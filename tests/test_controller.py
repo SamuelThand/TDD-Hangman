@@ -1,6 +1,9 @@
 import os
 import sys
+import time
 import unittest
+import tkinter as tk
+from unittest.mock import Mock
 
 from src.controllers.Controller import Controller
 from src.models.GameEngine import GameEngine
@@ -36,3 +39,16 @@ class TestController(unittest.TestCase):
         """Test that the controller has a exit method"""
         self.assertTrue(hasattr(self.controller_instance, 'exit') and
                         callable(getattr(self.controller_instance, 'exit')))
+
+    def test_input_works(self):
+        """Test that the correct letter or word is passed from the input field on submit"""
+        passed_input = 'a'
+        self.controller_instance.view.input_field = tk.Entry(self.controller_instance.view.game_frame)
+        callback_mock = Mock()
+        self.controller_instance.view.input_field.bind("<Return>", callback_mock)
+        event = Mock()
+        event.widget = self.controller_instance.view.input_field
+        event.widget.insert(0, passed_input)
+        event.widget.event_generate("<Return>")
+
+        self.assertEqual(event.widget.get(), passed_input)
