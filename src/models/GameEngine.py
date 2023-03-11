@@ -22,6 +22,8 @@ class GameEngine:
         """Start the game"""
         self.target_word = self.get_word()
         self.generate_word_list()
+        self.guesses = 0
+        self.guessed_characters = []
 
     def generate_word_list(self):
         """Generate the word to be displayed to the player"""

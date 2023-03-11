@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 from typing import Callable
 
 
@@ -8,7 +9,7 @@ class GUI:
     game_frame: tk.Frame
     play_button: tk.Button
     exit_button: tk.Button
-    input_field: tk.Entry
+    input_field: tk.Entry or None
     image_label: tk.Label or None
     hanging_image: tk.PhotoImage or None
     word_label: tk.Label or None
@@ -17,10 +18,12 @@ class GUI:
         """Initializes the GUI by setting up its components and configurations"""
         self.root = tk.Tk()
         self.root.geometry("800x500")
+        self.root.resizable(False, False)
         self.root.title("Hangman")
         self.root.config(bg="grey")
         self.setup_frames()
         self.setup_buttons()
+        self.input_field = None
         self.image_label = None
         self.hanging_image = None
         self.word_label = None
@@ -48,29 +51,33 @@ class GUI:
 
     def setup_input_field(self):
         """Displays the input field for guesses"""
-        self.input_field = tk.Entry(self.game_frame)
-        self.input_field.pack(side=tk.BOTTOM)
+        if self.input_field is None:
+            self.input_field = tk.Entry(self.game_frame)
+            self.input_field.pack(side=tk.BOTTOM)
 
     def display_hanging_image(self, guesses: int):
-        """Displays the hanging image for the amount of guesses"""
-        if self.image_label is not None:
-            self.image_label.destroy()
-            self.image_label = None
-            self.image_label = None
+        """Displays the hanging image for the current guess count"""
+        if self.image_label is None:
+            self.image_label = tk.Label(self.game_frame)
+            self.image_label.pack()
 
-        self.hanging_image = tk.PhotoImage(file=f'../src/other/{guesses}.png').zoom(3)
-        self.image_label = tk.Label(self.game_frame, image=self.hanging_image)
-        self.image_label.pack()
+        file_path = f'../src/other/{guesses}.png'
+        if self.hanging_image is None or self.hanging_image['file'] != file_path:
+            self.hanging_image = tk.PhotoImage(file=file_path).zoom(3)
+            self.image_label.config(image=self.hanging_image)
 
     def display_word(self, word: list):
         """Displays the censored target word"""
-        if self.word_label is not None:
-            self.word_label.destroy()
-            self.word_label = None
+        if self.word_label is None:
+            self.word_label = tk.Label(self.game_frame, width=200, font=('Arial', 20))
+            self.word_label.pack()
 
-        self.word_label = tk.Label(self.game_frame, text=' '.join(word),
-                                   width=200, font=('Arial', 20))
-        self.word_label.pack()
+        if self.word_label['text'] != ' '.join(word):
+            self.word_label.config(text=' '.join(word))
+
+    def display_message(self, message: str):
+        """Displays the passed message as a popup"""
+        messagebox.showinfo('Popup', message)
 
     def bind_play_button(self, callback: Callable):
         """Bind a function to left-clicks on the play button"""
