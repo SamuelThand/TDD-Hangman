@@ -40,6 +40,16 @@ class TestController(unittest.TestCase):
         self.assertTrue(hasattr(self.controller_instance, 'exit') and
                         callable(getattr(self.controller_instance, 'exit')))
 
+    def test_has_victory_method(self):
+        """Test that the controller has a game over method"""
+        self.assertTrue(hasattr(self.controller_instance, 'victory') and
+                        callable(getattr(self.controller_instance, 'victory')))
+
+    def test_has_game_over_method(self):
+        """Test that the controller has a game over method"""
+        self.assertTrue(hasattr(self.controller_instance, 'game_over') and
+                        callable(getattr(self.controller_instance, 'game_over')))
+
     def test_input_works(self):
         """Test that the correct letter or word is passed from the input field on submit"""
         passed_input = 'a'

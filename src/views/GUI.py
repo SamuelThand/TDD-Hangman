@@ -43,7 +43,11 @@ class GUI:
         self.exit_button.pack(side=tk.RIGHT)
 
     def draw_game_frame(self, word_progress: list, guesses: int):
-        """Draw the frame for the game"""
+        """
+        Draw the frame for the game
+        :param word_progress: The list of characters in the target word
+        :param guesses: The amount of guesses made
+        """
         self.game_frame.pack(fill=tk.BOTH, expand=True)
         self.setup_input_field()
         self.display_hanging_image(guesses)
@@ -56,7 +60,10 @@ class GUI:
             self.input_field.pack(side=tk.BOTTOM)
 
     def display_hanging_image(self, guesses: int):
-        """Displays the hanging image for the current guess count"""
+        """
+        Displays the hanging image for the current guess count
+        :param guesses: The amount of guesses made
+        """
         if self.image_label is None:
             self.image_label = tk.Label(self.game_frame)
             self.image_label.pack()
@@ -66,29 +73,44 @@ class GUI:
             self.hanging_image = tk.PhotoImage(file=file_path).zoom(3)
             self.image_label.config(image=self.hanging_image)
 
-    def display_word(self, word: list):
-        """Displays the censored target word"""
+    def display_word(self, word_progress: list):
+        """
+        Displays the censored target word
+        :param word_progress: The list of characters in the target word
+        """
         if self.word_label is None:
             self.word_label = tk.Label(self.game_frame, width=200, font=('Arial', 20))
             self.word_label.pack()
 
-        if self.word_label['text'] != ' '.join(word):
-            self.word_label.config(text=' '.join(word))
+        if self.word_label['text'] != ' '.join(word_progress):
+            self.word_label.config(text=' '.join(word_progress))
 
     def display_message(self, message: str):
-        """Displays the passed message as a popup"""
+        """
+        Displays the passed message as a popup
+        :param message: Message to display in the popup window
+        """
         messagebox.showinfo('Popup', message)
 
     def bind_play_button(self, callback: Callable):
-        """Bind a function to left-clicks on the play button"""
+        """
+        Bind a function to left-clicks on the play button
+        :param callback: The function to execute on click
+        """
         self.play_button.bind("<Button-1>", callback)
 
     def bind_exit_button(self, callback: Callable):
-        """Bind a function to left-clicks on the exit button"""
+        """
+        Bind a function to left-clicks on the exit button
+        :param callback: The function to execute on click
+        """
         self.exit_button.bind("<Button-1>", callback)
 
     def bind_input_field(self, callback: Callable):
-        """Bind a function to submitting the input field"""
+        """
+        Bind a function to submitting the input field
+        :param callback: The function to execute on submission
+        """
         self.input_field.bind("<Return>", callback)
 
     def start(self):
