@@ -98,6 +98,7 @@ class GUI:
         :param callback: The function to execute on click
         """
         self.play_button.bind("<Button-1>", callback)
+        self.root.bind("<Control-p>", callback)
 
     def bind_exit_button(self, callback: Callable):
         """
@@ -105,6 +106,7 @@ class GUI:
         :param callback: The function to execute on click
         """
         self.exit_button.bind("<Button-1>", callback)
+        self.root.bind("<Control-q>", callback)
 
     def bind_input_field(self, callback: Callable):
         """
