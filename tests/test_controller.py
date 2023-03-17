@@ -14,9 +14,11 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 class TestController(unittest.TestCase):
 
-    def setUp(self):
-        """Creates an instance of Controller before each test."""
-        self.controller_instance = Controller(GameEngine(), GUI())
+    @classmethod
+    def setUpClass(cls) -> None:
+        """Creates a controller instance for the tests"""
+        cls.controller_instance = Controller(GameEngine(), GUI())
+        cls.input_value = 'a'
 
     def test_instance(self):
         """Tests that the controller can be instantiated"""
@@ -52,13 +54,18 @@ class TestController(unittest.TestCase):
 
     def test_input_works(self):
         """Test that the correct letter or word is passed from the input field on submit"""
-        passed_input = 'a'
         self.controller_instance.view.input_field = tk.Entry(self.controller_instance.view.game_frame)
         callback_mock = Mock()
         self.controller_instance.view.input_field.bind("<Return>", callback_mock)
         event = Mock()
         event.widget = self.controller_instance.view.input_field
-        event.widget.insert(0, passed_input)
+        event.widget.insert(0, self.input_value)
         event.widget.event_generate("<Return>")
 
-        self.assertEqual(event.widget.get(), passed_input)
+        self.assertEqual(event.widget.get(), self.input_value)
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        """Clean up the test class after testing"""
+        cls.controller_instance = None
+        cls.input_value = None

@@ -13,9 +13,10 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 class TestGUI(unittest.TestCase):
     """Tests for the GUI"""
 
-    def setUp(self):
-        """ Creates an instance of GUI before each test. """
-        self.gui = GUI()
+    @classmethod
+    def setUpClass(cls) -> None:
+        """Creates a GameEngine instance for the tests"""
+        cls.gui = GUI()
 
     def test_instance(self):
         """Test that the can be instantiated"""
@@ -100,3 +101,11 @@ class TestGUI(unittest.TestCase):
         self.gui.display_word(["_", "a", "_", "c", "d", "_", "z"])
         self.assertIsInstance(self.gui.word_label, tk.Label)
         self.assertEqual(self.gui.word_label.cget("font"), "Arial 20")
+
+    def tearDown(self) -> None:
+        self.gui.setup_frames()
+        self.gui.setup_buttons()
+        self.input_field = None
+        self.image_label = None
+        self.hanging_image = None
+        self.word_label = None
