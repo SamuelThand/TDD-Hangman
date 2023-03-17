@@ -130,6 +130,7 @@ class GameEngine:
         :raises Exception: If a letter already in guessed characters is passed
         """
         index: [int] = []
+        guess = str.lower(guess)
         if len(guess) <= 1:
             self.char_validation(guess)
             if self.char_in_target_word(guess):
