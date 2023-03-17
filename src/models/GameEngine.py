@@ -13,6 +13,7 @@ class GameEngine:
     guesses: int
 
     def __init__(self):
+        """Initialize the game engine"""
         self.target_word = ""
         self.word_progress = []
         self.guessed_characters = []
@@ -30,7 +31,10 @@ class GameEngine:
         self.word_progress = ['_' for _ in self.target_word]
 
     def game_over(self) -> bool:
-        """Test if it is game over"""
+        """
+        Test if it is game over
+        :return It is game over
+        """
         return self.guesses == self.max_guesses
 
     def victory(self):
@@ -38,7 +42,10 @@ class GameEngine:
         return self.target_word == ''.join(self.word_progress)
 
     def get_word(self) -> str:
-        """Get a random word from other/words.json"""
+        """
+        Get a random word from other/words.json
+        :return A random word
+        """
         try:
             with open('../src/other/words.json') as file_handle:
                 words = json.load(file_handle)
