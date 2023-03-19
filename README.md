@@ -98,7 +98,7 @@ One problem that arose was that sometimes, a feature would not be fully complete
 ### Git workflow
 We followed the specified feature branch workflow as follows, where all merges to the master branch were done via pull requests on Bitbucket.
 
-
+![Image describing Feature Branch Workflow](feature_branch.png "Feature Branch Workflow")
 
 As the figure implies, each git branch had a close relation to a task in Trello. Therefore, each branch was named after that corresponding task so that it could be easily found and switched to. This also helped to ensure that the work was properly organized and tracked throughout the development process.
 
