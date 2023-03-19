@@ -1,4 +1,5 @@
 import json
+import os
 from random import randrange
 
 
@@ -47,7 +48,8 @@ class GameEngine:
         :return A random word
         """
         try:
-            with open('../src/other/words.json') as file_handle:
+            file_path = os.path.join(os.path.dirname(__file__), '..', 'other', 'words.json')
+            with open(file_path) as file_handle:
                 words = json.load(file_handle)
                 return words[f'{randrange(len(words) - 1)}']
         except IOError as e:

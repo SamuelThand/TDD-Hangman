@@ -1,3 +1,4 @@
+import os
 import tkinter as tk
 from tkinter import messagebox
 from typing import Callable
@@ -68,7 +69,7 @@ class GUI:
             self.image_label = tk.Label(self.game_frame)
             self.image_label.pack()
 
-        file_path = f'../src/other/{guesses}.png'
+        file_path = os.path.join(os.path.dirname(__file__), '..', 'other', f'{guesses}.png')
         if self.hanging_image is None or self.hanging_image['file'] != file_path:
             self.hanging_image = tk.PhotoImage(file=file_path).zoom(3)
             self.image_label.config(image=self.hanging_image)
